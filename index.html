@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -5,19 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>App Store - Boro</title>
     
-    <!-- إعدادات تطبيق الويب التقدمي PWA -->
+    <!-- PWA Basic Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#01875f">
     
-    <!-- توليد المانيفست برمجياً لضبط الاسم والأيقونة -->
+    <!-- Programmatic Manifest -->
     <script>
         const manifest = {
             "name": "Boro",
             "short_name": "Boro",
             "start_url": "main.html",
             "display": "standalone",
+            "orientation": "portrait",
             "background_color": "#ffffff",
             "theme_color": "#01875f",
             "icons": [{
@@ -40,21 +42,22 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+Arabic:wght@400;700&display=swap');
-        body { font-family: 'Roboto', sans-serif; background-color: #ffffff; color: #202124; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Roboto', sans-serif; background-color: #ffffff; color: #202124; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
         .arabic-text { font-family: 'Noto Sans Arabic', sans-serif; direction: rtl; }
         .screenshot-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding: 10px 0; scrollbar-width: none; }
         .screenshot-container::-webkit-scrollbar { display: none; }
         .screenshot-item { flex: 0 0 160px; scroll-snap-align: start; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0; }
-        .install-btn { background-color: #01875f; color: white; transition: all 0.3s ease; }
+        .install-btn { background-color: #01875f; color: white; transition: all 0.3s ease; border: none; }
+        .install-btn:disabled { background-color: #e8eaed; color: #5f6368; }
         .progress-container { display: none; width: 100%; height: 4px; background-color: #e8eaed; border-radius: 2px; margin-top: 10px; overflow: hidden; }
         .progress-bar { width: 0%; height: 100%; background-color: #01875f; transition: width 0.1s linear; }
         .rating-bar-bg { height: 8px; background-color: #e8eaed; border-radius: 4px; flex-grow: 1; overflow: hidden; }
         .rating-bar-fill { height: 100%; background-color: #01875f; border-radius: 4px; }
     </style>
 </head>
-<body class="max-w-md mx-auto shadow-lg min-h-screen pb-10">
+<body class="max-w-md mx-auto shadow-lg min-h-screen">
 
-    <!-- شريط التنقل العلوي -->
+    <!-- Header Navigation -->
     <nav class="flex items-center justify-between p-4 sticky top-0 bg-white z-50">
         <div class="flex items-center gap-4">
             <i class="fa-solid fa-arrow-left text-gray-600 text-lg cursor-pointer"></i>
@@ -67,9 +70,9 @@
         </div>
     </nav>
 
-    <!-- معلومات التطبيق الأساسية -->
+    <!-- Main App Info -->
     <header class="px-6 py-4 flex gap-5 items-start">
-        <img src="icon.png" alt="Boro Logo" class="w-20 h-20 rounded-2xl shadow-md border object-cover bg-gray-100" onerror="this.src='https://via.placeholder.com/80?text=Boro'">
+        <img src="icon.png" alt="Boro" class="w-20 h-20 rounded-2xl shadow-md border object-cover bg-gray-50" onerror="this.src='https://via.placeholder.com/80?text=Boro'">
         <div class="flex-1">
             <h1 class="text-2xl font-bold text-gray-900 leading-tight">Boro <span class="text-xs font-normal align-top">TM</span></h1>
             <p class="text-green-700 font-medium text-sm mt-1">Live Stream - Video Chat</p>
@@ -77,53 +80,53 @@
         </div>
     </header>
 
-    <!-- إحصائيات التحميل والتقييم -->
+    <!-- Stats Bar -->
     <div class="flex justify-around py-4 border-b border-gray-100 text-center">
-        <div>
-            <div class="flex items-center justify-center font-bold text-gray-800">4.9 <i class="fa-solid fa-star text-[10px] ml-1"></i></div>
-            <div class="text-[10px] text-gray-500">Reviews</div>
+        <div class="px-2">
+            <div class="flex items-center justify-center font-bold text-gray-800 text-sm">4.9 <i class="fa-solid fa-star text-[10px] ml-1"></i></div>
+            <div class="text-[10px] text-gray-500">22K reviews</div>
         </div>
         <div class="border-r border-gray-200"></div>
-        <div>
-            <div class="font-bold text-gray-800">8.2M+</div>
+        <div class="px-2">
+            <div class="font-bold text-gray-800 text-sm">8.2M+</div>
             <div class="text-[10px] text-gray-500">Downloads</div>
         </div>
         <div class="border-r border-gray-200"></div>
-        <div>
-            <div class="flex items-center justify-center font-bold text-gray-800">18+ <i class="fa-solid fa-circle-info text-[10px] ml-1"></i></div>
+        <div class="px-2">
+            <div class="flex items-center justify-center font-bold text-gray-800 text-sm">18+</div>
             <div class="text-[10px] text-gray-500">Rated for 18+</div>
         </div>
     </div>
 
-    <!-- زر التثبيت وشريط التحميل -->
+    <!-- Installation Interaction -->
     <div class="px-6 py-4">
-        <button id="installBtn" class="install-btn w-full py-2.5 rounded-lg font-medium text-sm shadow-md">Install</button>
+        <button id="installBtn" class="install-btn w-full py-2.5 rounded-lg font-medium text-sm shadow-sm">Install</button>
         <div id="progressContainer" class="progress-container">
             <div id="progressBar" class="progress-bar"></div>
         </div>
-        <div class="flex items-center justify-center mt-3 gap-2 text-gray-600">
-            <i class="fa-solid fa-mobile-screen-button text-xs"></i>
-            <span class="text-[10px]">This app is available for all your devices.</span>
+        <div class="flex items-center justify-center mt-3 gap-2 text-gray-500">
+            <i class="fa-solid fa-mobile-screen-button text-[10px]"></i>
+            <span class="text-[10px]">Install Boro on your device for the best experience.</span>
         </div>
     </div>
 
-    <!-- صور من داخل التطبيق -->
+    <!-- Screenshots Slider -->
     <div class="px-6">
         <div class="screenshot-container">
-            <div class="screenshot-item"><img src="1.png" class="w-full h-full object-cover aspect-[9/16]" onerror="this.src='https://via.placeholder.com/160x280?text=1'"></div>
-            <div class="screenshot-item"><img src="2.png" class="w-full h-full object-cover aspect-[9/16]" onerror="this.src='https://via.placeholder.com/160x280?text=2'"></div>
-            <div class="screenshot-item"><img src="3.png" class="w-full h-full object-cover aspect-[9/16]" onerror="this.src='https://via.placeholder.com/160x280?text=3'"></div>
+            <div class="screenshot-item"><img src="1.png" class="w-full h-full object-cover aspect-[9/16]" onerror="this.src='https://via.placeholder.com/160x280?text=S1'"></div>
+            <div class="screenshot-item"><img src="2.png" class="w-full h-full object-cover aspect-[9/16]" onerror="this.src='https://via.placeholder.com/160x280?text=S2'"></div>
+            <div class="screenshot-item"><img src="3.png" class="w-full h-full object-cover aspect-[9/16]" onerror="this.src='https://via.placeholder.com/160x280?text=S3'"></div>
         </div>
     </div>
 
-    <!-- حول التطبيق -->
+    <!-- About Section -->
     <section class="px-6 py-6">
-        <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center justify-between mb-3 cursor-pointer">
             <h2 class="text-lg font-medium text-gray-900">About this app</h2>
             <i class="fa-solid fa-arrow-right text-gray-500 text-sm"></i>
         </div>
         <p class="text-sm text-gray-600 leading-relaxed mb-4">
-            Boro is the leading dating app in the Arab world. Connect with girls from all over the world via live video calls and private chat. Enjoy an exciting experience and exclusive offers.
+            Boro is the leading dating app in the Arab world. Connect with people from all over the world via live video calls and private chat. Discover an exciting social experience.
         </p>
         <div class="flex flex-wrap gap-2">
             <span class="px-3 py-1 border border-gray-200 rounded-full text-[10px] text-gray-600">Social</span>
@@ -132,121 +135,145 @@
         </div>
     </section>
 
-    <!-- أمان البيانات (مسترجع بالكامل) -->
+    <!-- Data Safety Section -->
     <section class="px-6 py-6 border-t border-gray-100">
-        <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center justify-between mb-4 cursor-pointer">
             <h2 class="text-lg font-medium text-gray-900">Data safety</h2>
             <i class="fa-solid fa-arrow-right text-gray-500 text-sm"></i>
         </div>
-        <p class="text-sm text-gray-600 mb-5">Safety starts with understanding how developers collect and share your data.</p>
-        <div class="space-y-5 p-4 bg-gray-50 rounded-xl border border-gray-100">
+        <p class="text-xs text-gray-600 mb-5">Developers claim they don't sell your personal data to third parties.</p>
+        <div class="space-y-5 p-4 bg-gray-50 rounded-xl border border-gray-50">
             <div class="flex items-start gap-4">
-                <i class="fa-solid fa-share-nodes text-gray-500 mt-1"></i>
-                <div class="text-xs text-gray-700">This app may share these data types with third parties (Location, Personal info).</div>
+                <i class="fa-solid fa-share-nodes text-gray-500 mt-1 text-xs"></i>
+                <div class="text-[11px] text-gray-700 font-medium">May share location and device IDs.</div>
             </div>
             <div class="flex items-start gap-4">
-                <i class="fa-solid fa-lock text-gray-500 mt-1"></i>
-                <div class="text-xs text-gray-700">Data is encrypted in transit.</div>
+                <i class="fa-solid fa-lock text-gray-500 mt-1 text-xs"></i>
+                <div class="text-[11px] text-gray-700 font-medium">Data is encrypted in transit.</div>
             </div>
             <div class="flex items-start gap-4">
-                <i class="fa-solid fa-trash-can text-gray-500 mt-1"></i>
-                <div class="text-xs text-gray-700">You can request that data be deleted.</div>
+                <i class="fa-solid fa-trash-can text-gray-500 mt-1 text-xs"></i>
+                <div class="text-[11px] text-gray-700 font-medium">You can request data deletion.</div>
             </div>
         </div>
     </section>
 
-    <!-- التقييمات والمراجعات (مسترجع بالكامل) -->
+    <!-- Ratings & Detailed Analytics -->
     <section class="px-6 py-6 border-t border-gray-100">
         <div class="flex items-center justify-between mb-6">
             <h2 class="text-lg font-medium text-gray-900">Ratings and reviews</h2>
             <i class="fa-solid fa-arrow-right text-gray-500 text-sm"></i>
         </div>
 
-        <!-- توزيع النجوم -->
+        <!-- Rating Grid -->
         <div class="flex gap-8 mb-8">
             <div class="text-left">
                 <div class="text-6xl font-bold text-gray-900">4.9</div>
                 <div class="flex text-[#01875f] text-[10px] gap-0.5 mt-2">
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                 </div>
-                <div class="text-[10px] text-gray-500 mt-1">22,481 reviews</div>
             </div>
-            <div class="flex-grow space-y-1">
-                <div class="flex items-center gap-4 text-[10px] text-gray-500">5 <div class="rating-bar-bg"><div class="rating-bar-fill w-[90%]"></div></div></div>
-                <div class="flex items-center gap-4 text-[10px] text-gray-500">4 <div class="rating-bar-bg"><div class="rating-bar-fill w-[6%]"></div></div></div>
+            <div class="flex-grow space-y-1 mt-2">
+                <div class="flex items-center gap-4 text-[10px] text-gray-500">5 <div class="rating-bar-bg"><div class="rating-bar-fill w-[92%]"></div></div></div>
+                <div class="flex items-center gap-4 text-[10px] text-gray-500">4 <div class="rating-bar-bg"><div class="rating-bar-fill w-[4%]"></div></div></div>
                 <div class="flex items-center gap-4 text-[10px] text-gray-500">3 <div class="rating-bar-bg"><div class="rating-bar-fill w-[2%]"></div></div></div>
                 <div class="flex items-center gap-4 text-[10px] text-gray-500">2 <div class="rating-bar-bg"><div class="rating-bar-fill w-[1%]"></div></div></div>
                 <div class="flex items-center gap-4 text-[10px] text-gray-500">1 <div class="rating-bar-bg"><div class="rating-bar-fill w-[1%]"></div></div></div>
             </div>
         </div>
 
-        <!-- مراجعات المستخدمين -->
+        <!-- User Reviews -->
         <div class="space-y-8">
+            <!-- Ahmed -->
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">A</div>
+                        <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs font-bold shadow-sm">A</div>
                         <span class="text-sm font-medium">Ahmed_User</span>
                     </div>
                     <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
                 </div>
+                <div class="flex gap-1 text-[9px] text-[#01875f] mb-2">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <span class="text-gray-400 ml-2">May 10, 2024</span>
+                </div>
                 <p class="text-sm text-gray-600 leading-relaxed arabic-text">التطبيق شغال تمام والمكالمات واضحة جداً. أحسن تطبيق جربته لحد الآن.</p>
+                <div class="mt-3 flex items-center gap-4 text-[10px] text-gray-500">
+                    <span>Helpful?</span>
+                    <button class="px-3 py-0.5 border border-gray-200 rounded-full">Yes</button>
+                    <button class="px-3 py-0.5 border border-gray-200 rounded-full">No</button>
+                </div>
             </div>
-            
-            <!-- رد المطور -->
+
+            <!-- Reply to Ahmed -->
             <div class="bg-gray-50 p-4 rounded-xl -mt-4 border-l-4 border-green-600">
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-xs font-bold text-gray-800">Boro Team</span>
-                    <span class="text-[9px] text-gray-400">May 11, 2024</span>
+                    <span class="text-[9px] text-gray-400 font-medium">May 11, 2024</span>
                 </div>
-                <p class="text-xs text-gray-600 arabic-text">شكراً لثقتك بنا يا أحمد! نحن دائماً هنا للأفضل.</p>
+                <p class="text-xs text-gray-600 arabic-text leading-relaxed">شكراً لثقتك بنا يا أحمد! نحن نسعى دائماً لتطوير جودة الاتصال وتوفير أفضل تجربة لكم.</p>
             </div>
 
+            <!-- Sara -->
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-white text-xs font-bold">S</div>
+                        <div class="w-8 h-8 rounded-full bg-rose-500 flex items-center justify-center text-white text-xs font-bold shadow-sm">S</div>
                         <span class="text-sm font-medium">Sara_Vip</span>
                     </div>
+                    <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                </div>
+                <div class="flex gap-1 text-[9px] text-[#01875f] mb-2">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <span class="text-gray-400 ml-2">May 12, 2024</span>
                 </div>
                 <p class="text-sm text-gray-600 leading-relaxed arabic-text">روعة، البنات فيه كثير محترمات والدردشة سريعة وبدون تقطيع.</p>
             </div>
         </div>
-        <button class="text-green-700 text-sm font-medium w-full text-center py-4 mt-4">See all reviews</button>
+        <button class="text-[#01875f] text-sm font-bold w-full text-center py-6 mt-2">See all reviews</button>
     </section>
 
-    <!-- التذييل (Footer) - مسترجع بالكامل -->
-    <footer class="bg-gray-50 border-t border-gray-100 p-8 space-y-8">
-        <div class="grid grid-cols-2 gap-8">
+    <!-- Comprehensive Footer -->
+    <footer class="bg-gray-50 border-t border-gray-100 p-8 space-y-10">
+        <div class="grid grid-cols-2 gap-10">
             <div class="space-y-4">
-                <h4 class="text-[11px] font-bold text-gray-600 uppercase tracking-widest">Play Store</h4>
+                <h4 class="text-[11px] font-bold text-gray-700 uppercase tracking-widest">Support</h4>
                 <ul class="text-[10px] text-gray-500 space-y-3">
-                    <li>Gift cards</li>
-                    <li>Redeem</li>
-                    <li>Refund policy</li>
-                    <li>Help Center</li>
+                    <li class="hover:underline cursor-pointer">Help Center</li>
+                    <li class="hover:underline cursor-pointer">Safety Tips</li>
+                    <li class="hover:underline cursor-pointer">Refund Policy</li>
+                    <li class="hover:underline cursor-pointer">Redeem Code</li>
                 </ul>
             </div>
             <div class="space-y-4">
-                <h4 class="text-[11px] font-bold text-gray-600 uppercase tracking-widest">Policy</h4>
+                <h4 class="text-[11px] font-bold text-gray-700 uppercase tracking-widest">Legal</h4>
                 <ul class="text-[10px] text-gray-500 space-y-3">
-                    <li>Terms of Service</li>
-                    <li>Privacy Policy</li>
-                    <li>Developer Policy</li>
+                    <li class="hover:underline cursor-pointer">Privacy Policy</li>
+                    <li class="hover:underline cursor-pointer">Terms of Use</li>
+                    <li class="hover:underline cursor-pointer">Cookies</li>
+                    <li class="hover:underline cursor-pointer">Imprint</li>
                 </ul>
             </div>
         </div>
-        <div class="text-[9px] text-gray-400 text-center border-t border-gray-200 pt-8">
-            © 2024 Google LLC. Boro is a registered trademark. All prices include VAT where applicable.
+        <div class="pt-10 border-t border-gray-200">
+            <div class="flex justify-center gap-6 text-gray-400 mb-6 text-sm">
+                <i class="fa-brands fa-facebook-f"></i>
+                <i class="fa-brands fa-twitter"></i>
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-youtube"></i>
+            </div>
+            <p class="text-[9px] text-gray-400 text-center leading-relaxed italic">
+                © 2024 Boro Interactive Entertainment Inc. Google Play and the Google Play logo are trademarks of Google LLC. All prices include VAT.
+            </p>
         </div>
     </footer>
 
     <script>
-        // تسجيل Service Worker لتمكين التثبيت
+        // Service Worker for Offline/Install support
         if ('serviceWorker' in navigator) {
             const swCode = `self.addEventListener('install', e => self.skipWaiting()); self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));`;
             const blob = new Blob([swCode], {type: 'text/javascript'});
-            navigator.serviceWorker.register(URL.createObjectURL(blob));
+            navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
         }
 
         let deferredPrompt;
@@ -254,50 +281,71 @@
         const progressContainer = document.getElementById('progressContainer');
         const progressBar = document.getElementById('progressBar');
 
-        // التحقق من حالة التثبيت والتوجيه بعد 3 أيام
+        // Prevent automatic browser install banner
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault(); // This stops the browser's own popup
+            deferredPrompt = e;
+            console.log('Install prompt captured - Waiting for user click');
+        });
+
+        // Redirection logic for returning PWA users
         window.addEventListener('load', () => {
-            const installDate = localStorage.getItem('boro_installed_at');
-            if (installDate && (Date.now() - parseInt(installDate) >= 3*24*60*60*1000)) {
-                if (window.matchMedia('(display-mode: standalone)').matches) {
-                    window.location.href = 'main.html';
+            const installDate = localStorage.getItem('boro_pwa_install_v1');
+            if (installDate) {
+                const threeDays = 3 * 24 * 60 * 60 * 1000;
+                if (Date.now() - parseInt(installDate) >= threeDays) {
+                    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+                        window.location.replace('main.html');
+                    }
                 }
             }
         });
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
-
         installBtn.addEventListener('click', async () => {
+            // Check redirect logic first
+            const installDate = localStorage.getItem('boro_pwa_install_v1');
+            if (installDate && (Date.now() - parseInt(installDate) >= 3*24*60*60*1000)) {
+                 window.location.href = 'main.html';
+                 return;
+            }
+
+            // Trigger the stored prompt
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
                     deferredPrompt = null;
-                    animateInstall();
+                    startFakeInstall();
                 }
             } else {
-                animateInstall();
+                // Fallback for browsers that don't support the prompt or if already installed
+                startFakeInstall();
             }
         });
 
-        function animateInstall() {
+        function startFakeInstall() {
             installBtn.disabled = true;
             installBtn.innerText = 'Downloading...';
             progressContainer.style.display = 'block';
-            let p = 0;
+            let progress = 0;
             const timer = setInterval(() => {
-                p += 2;
-                progressBar.style.width = p + '%';
-                if (p >= 100) {
+                progress += (Math.random() * 3);
+                if (progress >= 100) {
+                    progress = 100;
                     clearInterval(timer);
                     installBtn.innerText = 'Installed';
-                    installBtn.style.backgroundColor = '#e8eaed';
-                    installBtn.style.color = '#5f6368';
-                    localStorage.setItem('boro_installed_at', Date.now().toString());
+                    localStorage.setItem('boro_pwa_install_v1', Date.now().toString());
                 }
-            }, 50);
+                progressBar.style.width = progress + '%';
+            }, 60);
         }
+
+        window.addEventListener('appinstalled', () => {
+            localStorage.setItem('boro_pwa_install_v1', Date.now().toString());
+            deferredPrompt = null;
+        });
     </script>
 </body>
+</html>
+
+```
